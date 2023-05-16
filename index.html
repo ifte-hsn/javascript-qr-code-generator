@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body{
+            background: #e5e5e5;
+            /* width: 100%; */
+            align-items: center;
+            display: flex;
+            justify-content: center;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .container {
+            background: #fff;
+            border: 1px solid #ccc;
+            margin: 50px auto;
+            padding: 40px 60px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        form {
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        input, button {
+            display: block;
+        }
+
+        input {
+            width: 500px;
+            padding: 10px 20px;
+            font-size: 17px;
+            border: 1px solid #ccc;
+        }
+
+        #error  {
+            display: none;
+            color: red;
+            font-weight: 700;
+        }
+
+        button {
+            background: #d02934;
+            border: 1px solid #d02934;
+            padding: 10px 20px;
+            text-align: center;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #fff;
+            margin-top: 20px;
+        }
+
+        #qr_image_div{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+        <form>
+            <input type="text" id="qr_text" placeholder="Please Enter Your Text Here" onfocus="inputFocus()">
+            <span id="error">Please provide text</span>
+            <button id="generate_btn" onclick="generate()" type="button">Generate</button>
+        </form>
+
+        <div id="qr_image_div">
+            <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png" id="qr_image">
+        </div>
+    </div>
+
+
+    <script>
+
+        let image_div = document.getElementById("qr_image_div");
+        let qr_image = document.getElementById("qr_image");
+        let error_span = document.getElementById("error");
+
+        function inputFocus() {
+            error_span.style.display = "none";
+        }
+        function generate() {
+            let qr_text = document.getElementById("qr_text").value;
+
+            if(qr_text.trim().length > 0) {
+                image_div.style.display = "block";
+                qr_image.src = "https://api.qrserver.com/v1/create-qr-code/?size240x240&data="+qr_text;
+
+            } else {
+                error_span.style.display = "block";
+            }
+        }
+    </script>
+</body>
+</html>
